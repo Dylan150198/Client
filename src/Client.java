@@ -31,21 +31,28 @@ public class Client {
             // Step 4: To get the server's response, the client reads from the BufferedReader object stdIn
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
             // Step 5: We're gonna send our input.
-            String userInput;
-            while ((userInput = stdIn.readLine()) != null) {
-                // The loop reads a line at a time from the standard input stream and,
-                // immediately sends it to the server by writing it to the PrintWriter connected to the socket:
-                out.println(userInput);
-                //reads a line of information from the BufferedReader connected to the socket.
-                //The readLine method waits until the server echoes the information back to the client.
-                //When readline returns, the client prints the information to the standard output.
-                System.out.println("echo: " + in.readLine());
+            String fromServer;
+            String fromUser;
 
-
-                if (userInput.equals("Disconnect"))
+            while ((fromServer = stdIn.readLine()) != null)
+            {
+                System.out.println("Server: " + fromServer);
+                if (fromServer.equals("Bye."))
                 {
                     break;
                 }
+                fromUser = stdIn.readLine();
+                if (fromUser != null)
+                {
+                    System.out.println("Client: " + fromUser);
+                    out.println(fromUser);
+                }
+                // The loop reads a line at a time from the standard input stream and,
+                // immediately sends it to the server by writing it to the PrintWriter connected to the socket:
+
+                //reads a line of information from the BufferedReader connected to the socket.
+                //The readLine method waits until the server echoes the information back to the client.
+                //When readline returns, the client prints the information to the standard output.
             }
         }
         // Error handling if the host is not found.
